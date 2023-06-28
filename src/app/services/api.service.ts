@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { catchError, map, tap } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -12,7 +13,10 @@ export class ApiService {
 
   annotation$ = this.annotation$$.asObservable();
 
-  constructor(private readonly _httpClient: HttpClient) { }
+  constructor(
+    private readonly _httpClient: HttpClient,
+    private readonly _snackBar: MatSnackBar,
+  ) { }
 
   getServiceAnnotation() {
     return this._httpClient.get(this.SERVICE_ANNOTATION_URL).pipe(
@@ -43,6 +47,8 @@ export class ApiService {
         return actionsConfig;
       }),
       catchError(() => {
+        this._snackBar.open('Failed to get annotations', 'Close');
+
         this.annotation$$.next([]);
         return [];
       }),
@@ -64,10 +70,19 @@ export class ApiService {
     );
   }
 
-  // should be jsonld
-  sendAction(url: string, action: any) {
-    return this._httpClient.post(url, action).pipe(
-      tap(console.log),
-    );
+  sendAction(target: any, action?: any) {
+    const url = target.urlTemplate;
+
+    if (target.httpMethod === 'POST') {
+      return this._httpClient.post(url, action).pipe(
+        tap(console.log),
+      );
+    } else if (target.httpMethod === 'DELETE') {
+      return this._httpClient.delete(url).pipe(
+        tap(console.log),
+      );
+    }
+
+    return of(null);
   }
 }

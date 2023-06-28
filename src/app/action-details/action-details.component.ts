@@ -62,11 +62,8 @@ export class ActionDetailsComponent {
 
     const url = this.action.target.urlTemplate;
 
-    console.log(body);
-
-    this._apiService.sendAction(url, body).subscribe((data) => {
+    this._apiService.sendAction(this.action.target, body).subscribe((data) => {
       this.resultData = data;
-      console.log(data);
       this._initResultAceEditor(data);
     });
   }
