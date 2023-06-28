@@ -1,0 +1,54 @@
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+}
+
+.error-container {
+  color: red;
+}
+
+.id-container {
+  padding: 0 1rem;
+}
+
+.action-container {
+  padding: 1rem;
+  padding-top: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.target-content {
+  margin-top: 1rem;
+
+}
+
+.empty {
+  height: 200px;
+}
+
+.input-output-container {
+  margin-top: 1rem;
+  display: flex;
+  gap:1rem;
+}
+
+.input-form-container {
+  margin-top: 1rem;
+  display: flex;
+  gap:1rem;
+}
+
+.input-card, .output-card, .input-form-card {
+  flex: 1;
+}
+
+.input-form-card {
+  background-color: #303030;
+}
+
+.app-ace-editor {
+}

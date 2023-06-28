@@ -1,0 +1,23 @@
+.title {
+  cursor: pointer;
+}
+
+.drawer-container {
+  height: calc(100vh - 64px);
+}
+
+.drawer {
+  padding: 1rem;
+  width: 250px;
+}
+
+.drawer-content {
+  padding: 1rem;
+}
+
+.controls-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

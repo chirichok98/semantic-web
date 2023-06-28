@@ -1,0 +1,8 @@
+<form [formGroup]="form">
+  <section *ngFor="let field of formFields" class="form-row">
+    <app-dynamic-form-input
+      [field]="field"
+      [form]="form"
+    ></app-dynamic-form-input>
+  </section>
+</form>

@@ -1,0 +1,121 @@
+<ng-container *ngIf="{ devMode: isDevMode$ | async} as config">
+  <div class="id-container">
+    <mat-form-field class="full-width">
+      <mat-label>Action ID</mat-label>
+      <input matInput readonly [value]="id">
+    </mat-form-field>
+  </div>
+
+  <div class="loading-container" *ngIf="loading$ | async">
+    <mat-spinner [diameter]="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <h4>{{error}}</h4>
+  </div>
+
+  <div *ngIf="action" class="action-container">
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput [value]="action.name">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <input matInput [value]="action.description">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="config.devMode" class="full-width">
+      <mat-label>Action Status</mat-label>
+      <input matInput readonly [value]="action.actionStatus">
+    </mat-form-field>
+
+    <mat-card *ngIf="config.devMode" class="example-card">
+      <mat-card-header>
+        <mat-card-title>Target: {{action.target.type}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="target-content">
+        <mat-form-field class="full-width">
+          <mat-label>Http Method</mat-label>
+          <input matInput readonly [value]="action.target.httpMethod">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Content Type</mat-label>
+          <input matInput readonly [value]="action.target.contentType">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Encoding Type</mat-label>
+          <input matInput readonly [value]="action.target.encodingType">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>URL Template</mat-label>
+          <input matInput readonly [value]="action.target.urlTemplate">
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- <div *ngIf="config.devMode" class="input-output-container"> -->
+    <div class="input-output-container">
+
+      <mat-card class="input-card">
+        <mat-card-header>
+          <mat-card-title>Input Model</mat-card-title>
+          <mat-card-subtitle>Path: {{action.input.path}}</mat-card-subtitle>
+          <mat-card-subtitle>Class: {{action.input.class}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="target-content">
+          <mat-form-field class="full-width" *ngFor="let property of action.input.properties">
+            <mat-label>{{property.path}}</mat-label>
+            <input matInput readonly [value]="property.datatype">
+            <mat-hint *ngIf="property.required">Required</mat-hint>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="output-card">
+        <mat-card-header>
+          <mat-card-title>Output Model</mat-card-title>
+          <mat-card-subtitle>Path: {{action.output.path}}</mat-card-subtitle>
+          <mat-card-subtitle>Class: {{action.output.class}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="target-content">
+          <mat-form-field class="full-width" *ngFor="let property of action.output.properties">
+            <mat-label>{{property.path}}</mat-label>
+            <input matInput readonly [value]="property.datatype">
+            <mat-hint *ngIf="property.required">Required</mat-hint>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="input-form-container">
+      <mat-card class="input-card">
+        <mat-card-header>
+          <mat-card-title>Testing</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="input-output-container">
+          <mat-card class="input-form-card">
+            <mat-card-header>
+              <mat-card-title>Input</mat-card-title>
+              <mat-card-subtitle>{{action.input.path}}: {{action.input.class}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="target-content">
+              <app-dynamic-form [formFields]="inputForm" (formChanged)="onFormChanged($event)"></app-dynamic-form>
+            </mat-card-content>
+          </mat-card>
+
+          <div class="input-form-card">
+            <div class="app-ace-editor" #editor style="width: 100%;height: 500px;"></div>
+          </div>
+          <!-- <mat-card class="input-form-card">
+            <mat-card-content class="target-content">
+            </mat-card-content>
+          </mat-card> -->
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</ng-container>

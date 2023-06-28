@@ -1,0 +1,372 @@
+{
+  "@context": {
+    "0": "http://http://example.org/eventapi/",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "schema": "http://schema.org/",
+    "wasa": "http://vocab.sti2.at/wasa/",
+    "event": "http://example.org/events/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "odta": "https://odta.io/voc/"
+  },
+  "@graph": [
+    {
+      "@id": "0:EventSearch",
+      "@type": "schema:SearchAction",
+      "schema:name": "Event Search",
+      "schema:description": "Search different types of events based on name or date",
+      "schema:actionStatus": {
+        "@id": "schema:PotentialActionStatus"
+      },
+      "schema:target": {
+        "@type": "schema:EntryPoint",
+        "schema:urlTemplate": {
+          "@id": "0:query"
+        },
+        "schema:encodingFormat": "application/ld+json",
+        "schema:contentType": "application/ld+json",
+        "schema:httpMethod": "POST"
+      },
+      "wasa:actionShape": {
+        "@type": "sh:NodeShape",
+        "sh:property": [
+          {
+            "sh:path": {
+              "@id": "schema:object"
+            },
+            "sh:group": {
+              "@id": "wasa:Input"
+            },
+            "sh:class": {
+              "@id": "schema:Event"
+            },
+            "sh:node": {
+              "sh:property": [
+                {
+                  "sh:path": {
+                    "@id": "schema:name"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:maxCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:startDate"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:date"
+                  },
+                  "sh:maxCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:endDate"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:date"
+                  },
+                  "sh:maxCount": 1
+                }
+              ]
+            },
+            "sh:minCount": 1,
+            "sh:maxCount": 1
+          },
+          {
+            "sh:path": {
+              "@id": "schema:result"
+            },
+            "sh:group": {
+              "@id": "wasa:Output"
+            },
+            "sh:nodeKind": {
+              "@id": "sh:IRI"
+            },
+            "sh:class": {
+              "@id": "schema:Event"
+            },
+            "sh:node": {
+              "sh:property": [
+                {
+                  "sh:path": {
+                    "@id": "schema:name"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:minCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:description"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:minCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:startDate"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:date"
+                  }
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:endDate"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:date"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@id": "0:TrailSearch",
+      "@type": "schema:SearchAction",
+      "schema:name": "Trail Search",
+      "schema:description": "Search different trails based on name or geos",
+      "schema:actionStatus": {
+        "@id": "schema:PotentialActionStatus"
+      },
+      "schema:target": {
+        "@type": "schema:EntryPoint",
+        "schema:urlTemplate": {
+          "@id": "0:query"
+        },
+        "schema:encodingFormat": "application/ld+json",
+        "schema:contentType": "application/ld+json",
+        "schema:httpMethod": "POST"
+      },
+      "wasa:actionShape": {
+        "@type": "sh:NodeShape",
+        "sh:property": [
+          {
+            "sh:path": {
+              "@id": "schema:object"
+            },
+            "sh:group": {
+              "@id": "wasa:Input"
+            },
+            "sh:class": {
+              "@id": "odta:Trail"
+            },
+            "sh:node": {
+              "sh:property": [
+                {
+                  "sh:path": {
+                    "@id": "schema:name"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:maxCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:latitude"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:double"
+                  },
+                  "sh:maxCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:longitude"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:double"
+                  },
+                  "sh:maxCount": 1
+                }
+              ]
+            },
+            "sh:minCount": 1,
+            "sh:maxCount": 1
+          },
+          {
+            "sh:path": {
+              "@id": "schema:result"
+            },
+            "sh:group": {
+              "@id": "wasa:Output"
+            },
+            "sh:nodeKind": {
+              "@id": "sh:IRI"
+            },
+            "sh:class": {
+              "@id": "schema:Event"
+            },
+            "sh:node": {
+              "sh:property": [
+                {
+                  "sh:path": {
+                    "@id": "schema:name"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:minCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:description"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:minCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:latitude"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:double"
+                  },
+                  "sh:maxCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:longitude"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:double"
+                  },
+                  "sh:maxCount": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@id": "0:PublicHolidaysSearch",
+      "@type": "schema:SearchAction",
+      "schema:name": "Public Holidays Search",
+      "schema:description": "Search different PublicHolidays based on name or date",
+      "schema:actionStatus": {
+        "@id": "schema:PotentialActionStatus"
+      },
+      "schema:target": {
+        "@type": "schema:EntryPoint",
+        "schema:urlTemplate": {
+          "@id": "0:query"
+        },
+        "schema:encodingFormat": "application/ld+json",
+        "schema:contentType": "application/ld+json",
+        "schema:httpMethod": "POST"
+      },
+      "wasa:actionShape": {
+        "@type": "sh:NodeShape",
+        "sh:property": [
+          {
+            "sh:path": {
+              "@id": "schema:object"
+            },
+            "sh:group": {
+              "@id": "wasa:Input"
+            },
+            "sh:class": {
+              "@id": "schema:PublicHolidays"
+            },
+            "sh:node": {
+              "sh:property": [
+                {
+                  "sh:path": {
+                    "@id": "schema:name"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:maxCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:startDate"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:date"
+                  },
+                  "sh:maxCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:endDate"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:date"
+                  },
+                  "sh:maxCount": 1
+                }
+              ]
+            },
+            "sh:minCount": 1,
+            "sh:maxCount": 1
+          },
+          {
+            "sh:path": {
+              "@id": "schema:result"
+            },
+            "sh:group": {
+              "@id": "wasa:Output"
+            },
+            "sh:nodeKind": {
+              "@id": "sh:IRI"
+            },
+            "sh:class": {
+              "@id": "schema:PublicHolidays"
+            },
+            "sh:node": {
+              "sh:property": [
+                {
+                  "sh:path": {
+                    "@id": "schema:name"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:minCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:description"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "sh:minCount": 1
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:startDate"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:date"
+                  }
+                },
+                {
+                  "sh:path": {
+                    "@id": "schema:endDate"
+                  },
+                  "sh:datatype": {
+                    "@id": "xsd:date"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
