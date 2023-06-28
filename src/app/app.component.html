@@ -10,7 +10,7 @@
   <mat-drawer mode="side" opened class="drawer">
     <h2>Actions</h2>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let nav of navItems" [routerLink]="'actions/' + nav.id"
+      <a mat-list-item *ngFor="let nav of navItems$ | async" [routerLink]="'actions/' + nav.id"
         routerLinkActive="active">{{nav.name}}</a>
     </mat-nav-list>
   </mat-drawer>

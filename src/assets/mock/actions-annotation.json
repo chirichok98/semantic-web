@@ -11,7 +11,7 @@
   "@graph": [
     {
       "@id": "0:EventSearch",
-      "@type": "schema:SearchAction",
+      "@type": "schema:Event",
       "schema:name": "Event Search",
       "schema:description": "Search different types of events based on name or date",
       "schema:actionStatus": {
@@ -20,7 +20,7 @@
       "schema:target": {
         "@type": "schema:EntryPoint",
         "schema:urlTemplate": {
-          "@id": "0:query"
+          "@id": "http://localhost:9000/sparqltool/query"
         },
         "schema:encodingFormat": "application/ld+json",
         "schema:contentType": "application/ld+json",
@@ -139,7 +139,7 @@
       "schema:target": {
         "@type": "schema:EntryPoint",
         "schema:urlTemplate": {
-          "@id": "0:query"
+          "@id": "http://localhost:9000/sparqltool/query"
         },
         "schema:encodingFormat": "application/ld+json",
         "schema:contentType": "application/ld+json",
@@ -260,7 +260,7 @@
       "schema:target": {
         "@type": "schema:EntryPoint",
         "schema:urlTemplate": {
-          "@id": "0:query"
+          "@id": "http://localhost:9000/sparqltool/query"
         },
         "schema:encodingFormat": "application/ld+json",
         "schema:contentType": "application/ld+json",

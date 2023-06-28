@@ -57,8 +57,7 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- <div *ngIf="config.devMode" class="input-output-container"> -->
-    <div class="input-output-container">
+    <div *ngIf="config.devMode" class="input-output-container">
 
       <mat-card class="input-card">
         <mat-card-header>
@@ -96,24 +95,35 @@
         <mat-card-header>
           <mat-card-title>Testing</mat-card-title>
         </mat-card-header>
-        <mat-card-content class="input-output-container">
-          <mat-card class="input-form-card">
-            <mat-card-header>
-              <mat-card-title>Input</mat-card-title>
-              <mat-card-subtitle>{{action.input.path}}: {{action.input.class}}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content class="target-content">
-              <app-dynamic-form [formFields]="inputForm" (formChanged)="onFormChanged($event)"></app-dynamic-form>
-            </mat-card-content>
-          </mat-card>
-
-          <div class="input-form-card">
-            <div class="app-ace-editor" #editor style="width: 100%;height: 500px;"></div>
+        <mat-card-content>
+          <div class="send-button-container">
+            <button mat-raised-button color="primary" (click)="sendRequest()">Send Request</button>
           </div>
-          <!-- <mat-card class="input-form-card">
-            <mat-card-content class="target-content">
-            </mat-card-content>
-          </mat-card> -->
+          <div class="input-output-container">
+            <mat-card class="input-form-card">
+              <mat-card-header>
+                <mat-card-title>Input</mat-card-title>
+                <mat-card-subtitle>{{action.input.path}}: {{action.input.class}}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content class="target-content">
+                <app-dynamic-form [formFields]="inputForm" (formChanged)="onFormChanged($event)"></app-dynamic-form>
+              </mat-card-content>
+            </mat-card>
+
+            <div class="input-form-card">
+              <div class="app-ace-editor" #editor style="width: 100%;height: 500px;"></div>
+            </div>
+          </div>
+          <div class="result-block">
+            <mat-card class="input-form-card">
+              <mat-card-header>
+                <mat-card-title>Result</mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="target-content">
+                <div class="app-ace-editor" #resultEditor style="width: 100%;height: 1000px;"></div>
+              </mat-card-content>
+            </mat-card>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>

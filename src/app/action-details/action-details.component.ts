@@ -20,6 +20,7 @@ import { InputAction } from './utils/generate-input-action';
 })
 export class ActionDetailsComponent {
   @ViewChild("editor") private editor!: ElementRef<HTMLElement>;
+  @ViewChild("resultEditor") private resultEditor!: ElementRef<HTMLElement>;
 
   id = this._route.snapshot.paramMap.get('actionId');
   isDevMode$ = this._developerModeService.getValue();
@@ -30,6 +31,9 @@ export class ActionDetailsComponent {
 
   error: any = null;
   action: any = null;
+
+  latestValue: any = null;
+  resultData: any = null;
 
   constructor(
     private _route: ActivatedRoute,
@@ -48,9 +52,23 @@ export class ActionDetailsComponent {
   }
 
   onFormChanged(event: any) {
-    console.log(event);
     const aceEditor = ace.edit(this.editor.nativeElement);
-    aceEditor.session.setValue(JSON.stringify(event));
+    this.latestValue = InputAction.getBaseConfig(this.action, event);
+    aceEditor.session.setValue(this.latestValue);
+  }
+
+  sendRequest() {
+    const body = JSON.parse(this.latestValue);
+
+    const url = this.action.target.urlTemplate;
+
+    console.log(body);
+
+    this._apiService.sendAction(url, body).subscribe((data) => {
+      this.resultData = data;
+      console.log(data);
+      this._initResultAceEditor(data);
+    });
   }
 
   private _initAceEditor(): void {
@@ -58,7 +76,19 @@ export class ActionDetailsComponent {
     ace.config.set('basePath', 'https://unpkg.com/ace-builds@1.4.12/src-noconflict');
 
     const aceEditor = ace.edit(this.editor.nativeElement);
-    aceEditor.session.setValue(InputAction.getBaseConfig(this.action.type, this.action.input.path));
+    this.latestValue = InputAction.getBaseConfig(this.action);
+    aceEditor.session.setValue(this.latestValue);
+
+    aceEditor.setTheme('ace/theme/twilight');
+    aceEditor.session.setMode('ace/mode/json');
+  }
+
+  private _initResultAceEditor(data: any): void {
+    ace.config.set("fontSize", "14px");
+    ace.config.set('basePath', 'https://unpkg.com/ace-builds@1.4.12/src-noconflict');
+
+    const aceEditor = ace.edit(this.resultEditor.nativeElement);
+    aceEditor.session.setValue(JSON.stringify(data, null, 2));
 
     aceEditor.setTheme('ace/theme/twilight');
     aceEditor.session.setMode('ace/mode/json');
@@ -100,12 +130,12 @@ export class ActionDetailsComponent {
     const inputAnnotation = actionAnnotation['wasa:actionShape']['sh:property'].find((p: any) => p['sh:group']['@id'] === 'wasa:Input');
 
     const input = {
-      path: inputAnnotation['sh:path']['@id'].replace('schema:', ''),
-      class: inputAnnotation['sh:class']['@id'].replace('schema:', ''),
+      path: inputAnnotation['sh:path']['@id'],
+      class: inputAnnotation['sh:class']['@id'],
       properties: inputAnnotation['sh:node']['sh:property'].map((p: any) => {
         console.log(p);
         return {
-          path: p['sh:path']['@id'].replace('schema:', ''),
+          path: p['sh:path']['@id'],
           datatype: this._mapDataType(p['sh:datatype']['@id']),
           required: p['sh:minCount'] > 0,
         };
@@ -114,11 +144,11 @@ export class ActionDetailsComponent {
 
     const outputAnnotation = actionAnnotation['wasa:actionShape']['sh:property'].find((p: any) => p['sh:group']['@id'] === 'wasa:Output');
     const output = {
-      path: outputAnnotation['sh:path']['@id'].replace('schema:', ''),
-      class: outputAnnotation['sh:class']['@id'].replace('schema:', ''),
+      path: outputAnnotation['sh:path']['@id'],
+      class: outputAnnotation['sh:class']['@id'],
       properties: outputAnnotation['sh:node']['sh:property'].map((p: any) => {
         return {
-          path: p['sh:path']['@id'].replace('schema:', ''),
+          path: p['sh:path']['@id'],
           datatype: this._mapDataType(p['sh:datatype']['@id']),
           required: p['sh:minCount'] > 0,
         };
@@ -126,10 +156,10 @@ export class ActionDetailsComponent {
     };
 
     return {
-      type: actionAnnotation['@type'].replace('schema:', ''),
+      type: actionAnnotation['@type'],
       name: actionAnnotation['schema:name'],
       description: actionAnnotation['schema:description'],
-      actionStatus: actionAnnotation['schema:actionStatus']['@id'].replace('schema:', ''),
+      actionStatus: actionAnnotation['schema:actionStatus']['@id'],
       target,
       input,
       output,

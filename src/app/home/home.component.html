@@ -1,0 +1,13 @@
+<h1>Home</h1>
+
+<div>
+  <mat-form-field class="full-width">
+    <mat-label>Annotation GET endpoint</mat-label>
+    <input matInput [formControl]="baseUrlControl">
+  </mat-form-field>
+</div>
+
+<div>
+  <button mat-raised-button color="primary" (click)="loadRemoteConfig()">Load Remote Config</button>
+  <button class="button-local" mat-raised-button color="accent" (click)="loadLocalConfig()">Use Local Config</button>
+</div>

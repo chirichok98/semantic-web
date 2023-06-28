@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from './services/api.service';
 import { DeveloperModeService } from './services/developer-mode.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  navItems: any[] = [];
+  navItems$: Observable<any> = this._apiService.annotation$;
 
   isDevMode$ = this._developerModeService.getValue();
 
@@ -17,9 +18,7 @@ export class AppComponent {
     private _apiService: ApiService,
     private _developerModeService: DeveloperModeService,
   ) {
-    this._apiService.getServiceAnnotation().subscribe((res: any) => {
-      this.navItems = res;
-    });
+    this._apiService.getServiceAnnotation().subscribe();
   }
 
   onDevModeChange(event: MatSlideToggleChange): void {

@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 
 import { ActionDetailsComponent } from './action-details.component';
@@ -22,6 +23,7 @@ const routes = [{
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
+    MatButtonModule,
     DynamicFormModule,
     RouterModule.forChild(routes),
   ],
